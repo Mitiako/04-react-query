@@ -1,14 +1,21 @@
 import axios from 'axios';
-import type { MovieSearchResponse } from '../types/movie';
+import type { Movie } from '../types/movie';
 
 // Базова URL адреса TMDB API
 const BASE_URL = 'https://api.themoviedb.org/3/search/movie';
 
+// Інтерфейс який описує структуру відповіді від TMDB API
+// Визначений тут бо використовується тільки в цьому файлі
+interface MovieSearchResponse {
+  results: Movie[];
+  total_pages: number;
+}
+
 // Функція для пошуку фільмів за ключовим словом та номером сторінки
 export async function fetchMovies(
-  // Пошуковий запит який вводить користувач
+  // Ключове слово яке вводить користувач
   query: string,
-  // Номер сторінки для пагінації починаючи з 1 за замовчуванням
+  // Номер сторінки для пагінації (за замовчуванням перша сторінка)
   page: number = 1
 ): Promise<MovieSearchResponse> {
   // Виконуємо GET запит до TMDB API

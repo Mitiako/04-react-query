@@ -8,10 +8,3 @@ export interface Movie {
   release_date: string;
   vote_average: number;
 }
-
-// Інтерфейс який описує структуру відповіді від TMDB API
-// Тепер нам також потрібна загальна кількість сторінок для пагінації
-export interface MovieSearchResponse {
-  results: Movie[];
-  total_pages: number;
-}

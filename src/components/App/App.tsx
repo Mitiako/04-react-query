@@ -28,13 +28,15 @@ export default function App() {
     // Використовуємо TanStack Query для керування запитами та кешуванням
     // Хоча я почитав, що для таких маленьки проектів краще коричтуватися SWR )
   const { data, isLoading, isError } = useQuery({
-    // Унікальний ключ запиту — оновлюється коли змінюється запит або сторінка
-    queryKey: ['movies', query, page],
-    // Функція яка виконує HTTP запит до TMDB API
-    queryFn: () => fetchMovies(query, page),
-    // Не виконуємо запит якщо пошуковий запит порожній
-    enabled: query !== '',
-  });
+  // Унікальний ключ запиту — оновлюється коли змінюється запит або сторінка
+  queryKey: ['movies', query, page],
+  // Функція яка виконує HTTP запит до TMDB API
+  queryFn: () => fetchMovies(query, page),
+  // Не виконуємо запит якщо пошуковий запит порожній
+  enabled: query !== '',
+  // Зберігаємо попередні дані поки завантажуються нові — уникаємо миготіння UI
+  placeholderData: (previousData) => previousData,
+});
 
   // Отримуємо масив фільмів з відповіді або порожній масив
   const movies = data?.results ?? [];
